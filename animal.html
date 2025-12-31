@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopet | Detalhes do Animal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  
+        <h1>🐾 <span>Adopet</span></h1>
+
+         <nav id="nav-auth"></nav>
+</header>
+
+<div class="container">
+    <div id="animalDetalhe"></div>
+
+    <div style="margin-top:30px; text-align:center">
+        <button class="btn-adopt" onclick="solicitarAdocao()">
+            ❤️ Solicitar Adoção
+        </button>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="js/script.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const animalId = params.get("id");
+let animalAtual = null;
+
+async function carregarAnimal() {
+    try {
+        const res = await fetch(`${API_URL}/animais/${animalId}`);
+        if (!res.ok) throw new Error();
+
+        animalAtual = await res.json();
+
+        const imgUrl = (animalAtual.fotosUrls && animalAtual.fotosUrls.length > 0)
+            ? animalAtual.fotosUrls[0]
+            : 'https://placehold.co/600x400?text=Adopet';
+
+        document.getElementById("animalDetalhe").innerHTML = `
+            <div class="card">
+                <img src="${imgUrl}" class="card-img" alt="${animalAtual.nome}">
+                <div class="card-body">
+                    <span class="card-tag">${animalAtual.especie}</span>
+                    <h2 class="card-title">${animalAtual.nome}</h2>
+
+                    <p class="card-info">
+                        ${animalAtual.raca} • ${animalAtual.idade} anos
+                    </p>
+
+                    <p style="margin:15px 0">
+                        ${animalAtual.descricao || "Sem descrição informada."}
+                    </p>
+
+                    <p class="card-info">
+                        💉 Vacinado: ${animalAtual.vacinado ? "Sim" : "Não"} <br>
+                        ✂️ Castrado: ${animalAtual.castrado ? "Sim" : "Não"}
+                    </p>
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        showToast("Erro ao carregar animal.", "error");
+    }
+}
+
+async function solicitarAdocao() {
+    const usuario = getUsuarioLogado();
+    if (!usuario) {
+        showToast("Faça login para solicitar adoção.", "error");
+        return setTimeout(() => window.location.href = "login.html", 1500);
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/adocoes/solicitacoes`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                animalId: animalAtual.id,
+                solicitanteId: usuario.id
+            })
+        });
+
+        if (!res.ok) throw new Error();
+
+        showToast("Solicitação de adoção enviada com sucesso!", "success");
+
+    } catch (e) {
+        showToast("Erro ao solicitar adoção.", "error");
+    }
+}
+
+carregarAnimal();
+
+</script>
+
+</body>
+</html>
+

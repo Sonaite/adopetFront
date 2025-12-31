@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopet | Solicitações Recebidas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="carregarSolicitacoesRecebidas()">
+
+<header>
+    <h1>🐾 <span>Adopet</span></h1>
+    <nav id="nav-auth"></nav>
+</header>
+
+<div class="container">
+    <h2 class="page-title">Solicitações de Adoção</h2>
+    <p class="page-subtitle">Pedidos para os seus animais</p>
+
+    <div class="listagem" id="listaSolicitacoes"></div>
+</div>
+
+<script src="js/script.js"></script>
+
+<script>
+async function carregarSolicitacoesRecebidas() {
+    protegerPagina();
+    const usuario = getUsuarioLogado();
+
+    try {
+        // ✅ endpoint correto (backend já filtra)
+        const res = await fetch(
+            `${API_URL}/adocoes/solicitacoes/doador/${usuario.id}`
+        );
+
+        if (!res.ok) throw new Error();
+
+        const solicitacoes = await res.json();
+        const div = document.getElementById("listaSolicitacoes");
+        div.innerHTML = "";
+
+        if (solicitacoes.length === 0) {
+            div.innerHTML = "<p>Nenhuma solicitação recebida.</p>";
+            return;
+        }
+
+        solicitacoes.forEach(s => {
+            div.innerHTML += `
+                <div class="card">
+                    <div class="card-body">
+                        <h3>${s.animal.nome}</h3>
+
+                        <p><strong>Solicitante:</strong> ${s.solicitante.nomeCompleto}</p>
+                        <p><strong>Status:</strong> ${s.status}</p>
+
+                        ${
+                            s.status === "PENDENTE"
+                            ? `
+                                <div class="admin-actions">
+                                    <button class="btn-approve"
+                                        onclick="aprovar('${s.id}')">
+                                        Aprovar
+                                    </button>
+                                    <button class="btn-reject"
+                                        onclick="rejeitar('${s.id}')">
+                                        Rejeitar
+                                    </button>
+                                </div>
+                              `
+                            : ""
+                        }
+                    </div>
+                </div>
+            `;
+        });
+
+    } catch (e) {
+        document.getElementById("listaSolicitacoes")
+            .innerHTML = "<p style='color:red'>Erro ao carregar solicitações.</p>";
+    }
+}
+
+async function aprovar(id) {
+    if (!confirm("Deseja aprovar esta adoção?")) return;
+
+    await fetch(`${API_URL}/adocoes/solicitacoes/${id}/aprovar`, {
+        method: "POST"
+    });
+
+    carregarSolicitacoesRecebidas();
+}
+
+async function rejeitar(id) {
+    if (!confirm("Deseja rejeitar esta adoção?")) return;
+
+    await fetch(`${API_URL}/adocoes/solicitacoes/${id}/rejeitar`, {
+        method: "POST"
+    });
+
+    carregarSolicitacoesRecebidas();
+}
+</script>
+
+</body>
+</html>
+

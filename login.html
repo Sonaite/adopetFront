@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopet | Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐾 <span>Adopet</span></h1>
+
+         <nav id="nav-auth"></nav>
+    </header>
+
+    <div class="auth-box">
+        
+        <div id="form-login-section">
+            <div class="auth-header">
+                <h2>Bem-vindo de volta!</h2>
+                <p>Acesse sua conta para adotar ou doar.</p>
+            </div>
+            <form onsubmit="handleAuth(event, true)">
+                <div class="input-group">
+                    <label>E-mail</label>
+                    <input type="email" name="email" required placeholder="seu@email.com">
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" name="senha" required placeholder="******">
+                </div>
+                <button type="submit" class="btn-login" style="width: 100%; padding: 12px;">Entrar</button>
+            </form>
+            <div class="toggle-link">
+                Não tem conta? <a onclick="toggleAuthMode()">Crie uma agora</a>
+            </div>
+        </div>
+
+        <div id="form-register-section" class="hidden">
+            <div class="auth-header">
+                <h2>Crie sua conta</h2>
+                <p>É rápido e gratuito.</p>
+            </div>
+            <form onsubmit="handleAuth(event, false)">
+                <div class="input-group">
+                    <label>Nome Completo</label>
+                    <input type="text" name="nomeCompleto" required placeholder="Ex: João Silva">
+                </div>
+                <div class="input-group">
+                    <label>E-mail</label>
+                    <input type="email" name="email" required placeholder="seu@email.com">
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" name="senha" required placeholder="Crie uma senha forte">
+                </div>
+                <button type="submit" class="btn-login" style="width: 100%; padding: 12px;">Criar Conta</button>
+            </form>
+            <div class="toggle-link">
+                Já tem conta? <a onclick="toggleAuthMode()">Fazer Login</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Scriptzinho simples apenas para trocar as telas de Login/Cadastro
+        function toggleAuthMode() {
+            document.getElementById('form-login-section').classList.toggle('hidden');
+            document.getElementById('form-register-section').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

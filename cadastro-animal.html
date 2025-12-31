@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopet | Cadastrar Animal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+       
+        <h1>🐾 <span>Adopet</span></h1>
+
+         <nav id="nav-auth"></nav>
+    </header>
+
+    <div class="container">
+        <div class="auth-box" style="max-width: 600px;">
+            <div class="auth-header">
+                <h2>Cadastrar Pet para Adoção</h2>
+                <p>Preencha as informações do animalzinho.</p>
+            </div>
+
+            <form id="form-animal" onsubmit="cadastrarAnimal(event)">
+                <div class="input-group">
+                    <label>Nome do Pet</label>
+                    <input type="text" id="nome" required placeholder="Ex: Rex">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="input-group">
+                        <label>Espécie</label>
+                        <select id="especie">
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Raça</label>
+                        <input type="text" id="raca" placeholder="Ex: Vira-lata">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Idade (anos)</label>
+                    <input type="number" id="idade" min="0" value="0">
+                </div>
+
+                <div class="input-group">
+                    <label>URL da Foto (Link da Internet)</label>
+                    <input type="url" id="foto" placeholder="http://exemplo.com/foto.jpg">
+                    <small style="color:#888;">Cole o link de uma imagem do Google Imagens, por exemplo.</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Descrição</label>
+                    <textarea id="descricao" rows="3" placeholder="Conte um pouco sobre a personalidade dele..."></textarea>
+                </div>
+
+                <div class="checkbox-row">
+                    <label><input type="checkbox" id="vacinado"> Vacinado</label>
+                    <label><input type="checkbox" id="castrado"> Castrado</label>
+                </div>
+
+                <button type="submit" class="btn-login" style="width: 100%; padding: 12px; font-size: 1rem;">Finalizar Cadastro</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Roda ao abrir a página para garantir que está logado
+        document.addEventListener('DOMContentLoaded', () => {
+            protegerPagina(); 
+        });
+    </script>
+</body>
+</html>
