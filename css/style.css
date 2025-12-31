@@ -174,9 +174,7 @@ nav a:hover, nav a.active { color: var(--primary); }
     margin-top: 2rem;
 }
 
-/* ============================= */
-/* === LISTA (ADOÇÕES / ADMIN) = */
-/* ============================= */
+
 
 /* ============================= */
 /* === LISTA DE SOLICITAÇÕES === */
@@ -217,7 +215,7 @@ nav a:hover, nav a.active { color: var(--primary); }
 .status.REJEITADA { color: var(--primary); }
 
 /* ============================= */
-/* === BOTÕES ADMIN ============ */
+/* === BOTÕES  de solicitações ============ */
 /* ============================= */
 
 .admin-actions {
@@ -249,45 +247,9 @@ nav a:hover, nav a.active { color: var(--primary); }
 .btn-approve:hover { background: #20bf6b; }
 .btn-reject:hover { background: var(--primary-hover); }
 
-/* ============================= */
-/* === DENÚNCIA ================= */
-/* ============================= */
 
-.denuncia-box {
-    max-width: 600px;
-    margin: 3rem auto;
-    background: var(--light);
-    padding: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
 
-.denuncia-box textarea {
-    min-height: 120px;
-    resize: vertical;
-}
 
-/* ============================= */
-/* === TRANSPORTE ============== */
-/* ============================= */
-
-.transporte-box {
-    max-width: 600px;
-    margin: 3rem auto;
-    background: var(--light);
-    padding: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
-
-.transporte-status {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 1rem;
-}
-
-.transporte-status.EM_ANDAMENTO { color: #f39c12; }
-.transporte-status.ENTREGUE { color: var(--secondary); }
 
 
 
@@ -301,7 +263,7 @@ nav a:hover, nav a.active { color: var(--primary); }
 
 
 /* =========================
-   PERFIL PROFISSIONAL
+   PERFIL 
 ========================= */
 
 .profile-grid {
